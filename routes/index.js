@@ -11,7 +11,8 @@ router.get('/projects', (req, res) => {
 })
 
 router.post('/new', (req, res) => {
-    let { title, description, phase } = req.body
+    let { title, description } = req.body
+    let phase = 'flowcharts'
     var newProject = new Project({ title, description, phase })
     newProject.save((err) => {
         if (err) { console.error('Error when saving the project') } else { console.log('Saved !') }
