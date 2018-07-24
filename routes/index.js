@@ -21,7 +21,18 @@ router.post('/new', (req, res) => {
 router.delete('/delete', (req, res) => {
     let { _id } = req.body
     Project.deleteOne({ _id }, (err) => {
-        if (err) { console.log('Error when deleting the project') } else { console.log('Success in deleting project !') }
+        if (err) { console.error('Error when deleting the project') } else { console.log('Success in deleting project !') }
+    })
+})
+
+router.put('/update', (req, res) => {
+    let { _id, phase } = req.body
+    Project.findById({ _id }, (err, project) => {
+        if (err) { console.error('Error when finding the project to update') }
+        project.set({ phase: phase });
+        project.save((err) => {
+            if (err) { console.error('Error when saving the project') } else { console.log('Project updated !') }
+        })
     })
 })
 
