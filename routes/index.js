@@ -11,19 +11,18 @@ router.get('/projects', (req, res) => {
 })
 
 router.post('/new', (req, res) => {
-    let { title, description } = req.body
-    let phase = 'flowcharts'
-    var newProject = new Project({ title, description, phase })
+    let { task } = req.body
+    var newProject = new Project(task)
     newProject.save((err) => {
         if (err) { console.error('Error when saving the project') } else { console.log('Saved !') }
     })
 })
 
 router.delete('/delete', (req, res) => {
-    let { _id } = req.body
-    Project.deleteOne({ _id }, (err) => {
+    var { _id } = req.body
+    return (_id) ? Project.deleteOne({ _id }, (err) => {
         if (err) { console.error('Error when deleting the project') } else { console.log('Success in deleting project !') }
-    })
+    }) : console.error('Error: Request parameter not available')
 })
 
 router.put('/update', (req, res) => {
